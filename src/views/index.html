@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <html lang="en">
+    <meta charset="UTF-8" />
+    
+    <title>ALGOLEARN</title>
+    <link rel="stylesheet" href="../styles/style.css">
+  </head>
+  <body>
+    <div class="header">
+      <h1 id="appTitle">
+        <span class="algolearn-algo">ALGO</span><span class="algolearn-learn">LEARN</span>
+      </h1>
+      <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search algorithms...">
+      </div>
+    </div>
+
+
+    <div class="filters">
+      <h3>CATEGORIES</h3>
+      <label><input type="checkbox" name="sorting"> Sorting Algorithms</label>
+      <label><input type="checkbox" name="graph"> Graph Algorithms</label>
+      <label><input type="checkbox" name="search"> Search Algorithms</label>
+    </div>
+    <div id="resultsBox">
+      <div class="results-header">
+        <span class="name">Name</span>
+        <span class="category">Category</span>
+        <span class="difficulty">Difficulty</span>
+      </div>
+      <div id="results"></div>
+    </div>
+
+    <script src="../scripts/appRenderer.js"></script>
+  </body>
+</html>

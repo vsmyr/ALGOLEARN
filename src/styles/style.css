@@ -1,0 +1,264 @@
+/* ===== BOX SIZING ===== */
+*, *::before, *::after {
+    box-sizing:border-box;
+}
+/* ===== FONTS ===== */
+@font-face {
+    font-family: 'EncodeSans';
+    src: url('../../assets/fonts/EncodeSans-VariableFont_wdth,wght.ttf') format('truetype-variations');
+}
+
+@font-face {
+    font-family: 'LexendMega';
+    src: url('../../assets/fonts/LexendMega-VariableFont_wght.ttf') format('truetype-variations');
+}
+@font-face {
+    font-family: 'AlumniSansPinstripe';
+    src: url('../../assets/fonts/AlumniSansPinstripe-Italic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'AlumniSansPinstripe';
+    src: url('../../assets/fonts/AlumniSansPinstripe-Regular.ttf') format('truetype');
+}
+
+/* ===== BASIC STUFF ===== */
+* {
+    user-select: none;
+    -webkit-user-select: none;
+}
+input, textarea {
+    user-select: text;
+    -webkit-user-select: text;
+}
+/* ===== COLORS & TYPOGRAPHY ===== */
+:root {
+    --bg-dark: #0d0d0d;
+    --primary-wine-red: #8b0000;
+    --accent-wine-red: #b30000;
+    --text-light: #e0e0e0;
+    --bg-box: rgba(34, 28, 28, 0.42);
+    --placeholder: rgba(255,255,255,0.5);
+}
+
+body {
+    margin: 0 auto;
+    padding: 20px 16px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #3b2323 0%, #1f1818 44%, #0d0d0d 100%);
+    color: var(--text-light);
+    font-family: 'EncodeSans', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    font-variation-settings: 'wght' 360;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ===== SEARCH BAR & APP TITLE===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 12px;
+}
+#appTitle .algolearn-algo {
+    color: var(--primary-wine-red);
+    text-shadow: 0 0 4px var(--primary-wine-red);
+}
+#appTitle .algolearn-learn {
+    color: var(--accent-wine-red);
+    text-shadow: 0 0 4px var(--accent-wine-red);
+}
+#appTitle{
+    margin-left: 2.5%; /*because standard width is 95% => each side is 2.5% */
+    margin-right: auto;
+    z-index: 1;  
+    font-family: 'LexendMega', sans-serif;
+    font-variation-settings: 'wght' 500;
+    font-size: 32px;
+    color: var(--text-light);
+}
+.search-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 360px;
+    max-width: 75%;
+    z-index:0;
+}
+
+#searchBar {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--primary-wine-red);
+    color: var(--text-light);
+    border-radius: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s ease;
+}
+#searchBar::placeholder{
+    color: var(--placeholder);
+}
+#searchBar:hover {
+    box-shadow: 0 0 8px var(--primary-wine-red);
+}
+#searchBar:focus {
+    outline: none;
+    border-color: var(--accent-wine-red);
+    box-shadow: 0 0 8px var(--accent-wine-red);
+}
+
+/* ===== FILTERS & CATEGORIES===== */
+.filters{
+    width: 95%;
+    max-width: 95%;
+    padding: 16px;
+    margin-bottom: 32px;
+    background: var(--bg-box);
+    border: 1px solid var(--primary-wine-red);
+    border-radius: 4px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    
+    
+}
+
+.filters h3 {
+    width: 100%;
+    margin: 0 0 2px;
+    text-align: center;
+    color: var(--primary-wine-red);
+    text-shadow: 0 0 4px var(--primary-wine-red);
+    font-size:24px;
+}
+.filters:has(input[type="checkbox"]:checked) h3 {
+    color: var(--accent-wine-red);
+    text-shadow: 0 0 12px var(--accent-wine-red);
+}
+
+.filters label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+    /* --checkbox and its effects-- */
+    .filters input[type="checkbox"]{
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--primary-wine-red);
+        border-radius: 3px;
+        margin-right: 8px;
+        position: relative;
+        vertical-align: middle;
+        transition: all 0.2s ease;
+    }
+
+    .filters input[type="checkbox"]:checked {
+        background-color: var(--accent-wine-red);
+        border-color: var(--accent-wine-red);
+    }
+
+    .filters input[type="checkbox"]:checked::after {
+        content: "✓";
+        color: var(--bg-dark);
+        position: absolute;
+        left: 2px;
+        top: -2px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .filters label:hover input[type="checkbox"] {
+        box-shadow: 0 0 8px var(--primary-wine-red);
+    }
+    .filters label:hover input[type="checkbox"]:checked {
+        box-shadow: 0 0 8px var(--accent-wine-red);
+    }
+
+
+/* ===== RESULTS ===== */
+#resultsBox {
+    margin: 20px auto 0;
+    width: 95%;
+    border-radius: 4px;
+    background: var(--bg-box); 
+    overflow-x: auto;
+    padding: 20px;
+    min-height: 60px; 
+    color: #fff;     
+    border: 1px solid var(--primary-wine-red);
+}
+.results-header, .algorithm-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.results-header {
+    font-weight: bold;
+    color: var(--primary-wine-red);
+    margin-bottom:8px;
+    font-size: 20px;
+    background: transparent;
+}
+.results-header .name,
+.algorithm-item .name {
+    min-width: 50%;
+    flex: 2 1 50%;
+    border-right: 1.5px solid var(--primary-wine-red);
+    margin-right: 12px;
+    text-align: left;
+    word-break: break-word;
+}
+.results-header .category, .algorithm-item .category {
+    border-right: 1.5px solid var(--primary-wine-red);
+    margin-right: 12px;
+    flex: 1 1 25%;
+    text-align: left;
+    word-break: break-word;
+}
+.results-header .difficulty,
+.algorithm-item .difficulty {
+    flex: 1 1 25%;
+    text-align: left;
+    word-break: break-word;
+}
+.results-header span:last-child,
+.algorithm-item span:last-child {
+    border-right: none;
+    margin-right: 0;
+}
+.algorithm-item {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.algorithm-item:hover {
+    text-shadow: 0 0 8px var(--accent-wine-red);
+    color: var(--accent-wine-red);
+}
+
+.difficulty {transition: all 0.2s ease;}
+.difficulty.easy {color: limegreen;}
+.difficulty.medium {color: gold;}
+.difficulty.hard {color: crimson;}
+.algorithm-item:hover .difficulty {
+    text-shadow: 0 0 8px currentColor;
+}
+
+/* ===== FADEOUT ===== */
+body.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}

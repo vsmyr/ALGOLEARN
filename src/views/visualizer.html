@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ALGOLEARN: Algorithm Visualizer</title>
+        <link rel="stylesheet" href="../styles/visualizerStyle.css">
+    </head>
+    <body>
+        <div id="visualizer-container">
+            <!-- Top Bar-->
+             <header id="top-bar">
+                <button id="back-button" aria-label="Go Back">←</button>
+                <h1 id="algorithm-title"></h1>
+             </header>
+             <!--Main Content-->
+             <main id="main-content">
+                <!--Visualization Area-->
+                <section id="visualization-window">
+                    <!-- dynamic canvas or svg or DOM elementes rendered via JavaScript (will decide later)-->
+                </section>
+                
+                <!--Sidebar Controls-->
+                <aside id="sidebar-controls">
+                    <!-- Dynamic Input System injected via JavaScript (will decide later how it will be done)-->
+                </aside>
+             </main>
+        
+        </div>
+        <script type="module" src="../scripts/visualizerRenderer.js"></script>
+    </body>
+</html>
