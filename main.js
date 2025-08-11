@@ -13,8 +13,8 @@ function createWindow() {
     height: 720,
     minWidth: 1280,
     minHeight: 720,
-    maxWidth:3840,
-    maxHeight: 2160,
+    maxWidth: 2560,
+    maxHeight: 1440,
     autoHideMenuBar: true,
     icon: path.join(__dirname, 'assets/logo/logo.png'),
     webPreferences: {
@@ -28,7 +28,14 @@ function createWindow() {
   win.loadFile('./src/views/index.html');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+
+  // macOS: recreate a window when the dock icon is clicked and there are no other windows open
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();

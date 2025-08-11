@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         //fadeout effect
         setTimeout(() => {
             window.location.href = '../views/index.html';
-        }, 300);        
+        }, 200);        
     });
     try {
         //import module algorithm.js (replace algorithm with algorithm file name)
@@ -37,6 +37,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
         algorithmTitle.textContent = 'Algorithm Not Found';
         visualizationWindow.textContent = 'Failed to load algorithm module.';
-        console.error('Failed to lοαd algorithm module:', err);
+        console.error('Failed to lοad algorithm module:', err);
     }
 });

@@ -1,24 +1,32 @@
 /* ===== BOX SIZING ===== */
 *, *::before, *::after {
     box-sizing:border-box;
+    margin: 0;
+    padding: 0;
 }
 /* ===== FONTS ===== */
 @font-face {
     font-family: 'EncodeSans';
     src: url('../../assets/fonts/EncodeSans-VariableFont_wdth,wght.ttf') format('truetype-variations');
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'LexendMega';
     src: url('../../assets/fonts/LexendMega-VariableFont_wght.ttf') format('truetype-variations');
+    font-display: swap;
 }
 @font-face {
     font-family: 'AlumniSansPinstripe';
     src: url('../../assets/fonts/AlumniSansPinstripe-Italic.ttf') format('truetype');
+    font-style: italic;
+    font-display: swap;
 }
 @font-face {
     font-family: 'AlumniSansPinstripe';
     src: url('../../assets/fonts/AlumniSansPinstripe-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-display: swap;
 }
 
 /* ===== BASIC STUFF ===== */
@@ -30,235 +38,291 @@ input, textarea {
     user-select: text;
     -webkit-user-select: text;
 }
-/* ===== COLORS & TYPOGRAPHY ===== */
+
+/* ===== FLUID CSS CUSTOM PROPERTIES ===== */
 :root {
+    /* Coloring */
     --bg-dark: #0d0d0d;
     --primary-wine-red: #8b0000;
     --accent-wine-red: #b30000;
     --text-light: #e0e0e0;
     --bg-box: rgba(34, 28, 28, 0.42);
-    --placeholder: rgba(255,255,255,0.5);
+    --text-box-background: rgba(255,255,255,0.05);
+    --subtle-highlight: rgba(255, 255, 255, 0.018);
+
+    /* Spacing */
+    --space-xs: clamp(0.25rem, 1vw, 0.75rem);
+    --space-sm: clamp(0.5rem, 1.5vw, 1rem);
+    --space-md: clamp(0.75rem, 2vw, 1.5rem);
+    --space-lg: clamp(1rem, 3vw, 2.5rem);
+    --space-xl: clamp(1.5rem, 4vw, 4rem);
+
+    /*Typography */
+    --font-xs: clamp(0.75rem, 1.5vw, 1rem);        
+    --font-sm: clamp(0.875rem, 2vw, 1.125rem);     
+    --font-base: clamp(1rem, 2.5vw, 1.25rem);      
+    --font-lg: clamp(1.125rem, 3vw, 1.5rem);       
+    --font-xl: clamp(1.25rem, 4vw, 2rem);          
+    --font-2xl: clamp(1.5rem, 5vw, 3rem);          
+    --font-3xl: clamp(2rem, 6vw, 4rem);
+
+    /*Container*/
+    --container-padding: clamp(1rem, 5vw, 3rem);
+    --container-max-width: 95vw;
+    
+    /*Borders & Radius*/
+    --radius-sm: clamp(2px, 0.5vw, 6px);
+    --radius-md: clamp(4px, 1vw, 12px);
+    --radius-lg: clamp(8px, 1.5vw, 16px);
+    
+    /* Interactive Elements */
+    --input-height: clamp(2.5rem, 6vh, 4rem);
+    --button-height: clamp(2rem, 5vh, 3.5rem);
+    --checkbox-size: clamp(1rem, 2vw, 1.25rem);
+    
+    /* Grid Gaps */
+    --grid-gap-sm: clamp(0.5rem, 2vw, 1rem);
+    --grid-gap-md: clamp(1rem, 3vw, 2rem);
+    --grid-gap-lg: clamp(1.5rem, 4vw, 3rem);
 }
 
 body {
-    margin: 0 auto;
-    padding: 20px 16px;
+    padding: 32px 48px;
     min-height: 100vh;
     background: linear-gradient(135deg, #3b2323 0%, #1f1818 44%, #0d0d0d 100%);
     color: var(--text-light);
-    font-family: 'EncodeSans', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    font-family: 'EncodeSans', 'system-ui', -apple-system, sans-serif;
     font-variation-settings: 'wght' 360;
-    font-size: 20px;
-    letter-spacing: 0.02em;
+    font-size: var(--font-base);
+    overflow-x: hidden;
     line-height: 1.6;
+}
+/* ===== SEARCH BAR & APP TITLE ===== */
+
+.header-bar {
+    position: relative;
+    width: 100%;
+    height: 72px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
-
-
-/* ===== SEARCH BAR & APP TITLE===== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  position: relative;
-  margin-bottom: 12px;
+.header-bar #appTitle {
+    font-family: 'LexendMega';
+    font-size: 40px;
+    text-align: center;
+    font-variation-settings: 'wght' 500;
 }
-#appTitle .algolearn-algo {
+
+.header-bar #appTitle .algolearn-algo {
     color: var(--primary-wine-red);
     text-shadow: 0 0 4px var(--primary-wine-red);
 }
-#appTitle .algolearn-learn {
+.header-bar #appTitle .algolearn-learn {
     color: var(--accent-wine-red);
     text-shadow: 0 0 4px var(--accent-wine-red);
 }
-#appTitle{
-    margin-left: 2.5%; /*because standard width is 95% => each side is 2.5% */
-    margin-right: auto;
-    z-index: 1;  
-    font-family: 'LexendMega', sans-serif;
-    font-variation-settings: 'wght' 500;
-    font-size: 32px;
-    color: var(--text-light);
-}
-.search-container {
+
+
+.header-bar .search-bar {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 360px;
-    max-width: 75%;
-    z-index:0;
+    width: 400px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#searchBar {
-    width: 100%;
-    padding: 12px 16px;
+.header-bar .search-bar input{
+    width: 90%;
+    height: 85%;
     font-size: 16px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--text-box-background);
     border: 2px solid var(--primary-wine-red);
     color: var(--text-light);
     border-radius: 8px;
     transition: border-color 0.3s, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    padding: 0 16px;
 }
-#searchBar::placeholder{
-    color: var(--placeholder);
-}
-#searchBar:hover {
+
+.header-bar .search-bar input:hover {
     box-shadow: 0 0 8px var(--primary-wine-red);
 }
-#searchBar:focus {
+
+.header-bar .search-bar input:focus {
     outline: none;
     border-color: var(--accent-wine-red);
     box-shadow: 0 0 8px var(--accent-wine-red);
 }
 
-/* ===== FILTERS & CATEGORIES===== */
-.filters{
-    width: 95%;
-    max-width: 95%;
-    padding: 16px;
-    margin-bottom: 32px;
-    background: var(--bg-box);
-    border: 1px solid var(--primary-wine-red);
-    border-radius: 4px;
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    
-    
+
+/* ===== FILTER SECTION ===== */
+.filter-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px 0;
 }
 
-.filters h3 {
+.filters {
     width: 100%;
-    margin: 0 0 2px;
-    text-align: center;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--primary-wine-red);
+    border-radius: 8px;
+    background: var(--bg-box)
+}
+.filters #filter-heading {
     color: var(--primary-wine-red);
     text-shadow: 0 0 4px var(--primary-wine-red);
-    font-size:24px;
+    font-size: 32px;
 }
-.filters:has(input[type="checkbox"]:checked) h3 {
+
+.filters:has(.check-box-filters input[type="checkbox"]:checked) #filter-heading {
     color: var(--accent-wine-red);
     text-shadow: 0 0 12px var(--accent-wine-red);
 }
-
-.filters label {
+.filters .check-box-filters {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+}
+.filters .check-box-filters .filter-option label {
+    font-size: 24px;
     cursor: pointer;
-    font-weight: 400;
 }
 
-    /* --checkbox and its effects-- */
-    .filters input[type="checkbox"]{
-        appearance: none;
-        width: 16px;
-        height: 16px;
-        border: 2px solid var(--primary-wine-red);
-        border-radius: 3px;
-        margin-right: 8px;
-        position: relative;
-        vertical-align: middle;
-        transition: all 0.2s ease;
-    }
-
-    .filters input[type="checkbox"]:checked {
-        background-color: var(--accent-wine-red);
-        border-color: var(--accent-wine-red);
-    }
-
-    .filters input[type="checkbox"]:checked::after {
-        content: "✓";
-        color: var(--bg-dark);
-        position: absolute;
-        left: 2px;
-        top: -2px;
-        font-size: 12px;
-        font-weight: bold;
-    }
-    .filters label:hover input[type="checkbox"] {
-        box-shadow: 0 0 8px var(--primary-wine-red);
-    }
-    .filters label:hover input[type="checkbox"]:checked {
-        box-shadow: 0 0 8px var(--accent-wine-red);
-    }
-
-
-/* ===== RESULTS ===== */
-#resultsBox {
-    margin: 20px auto 0;
-    width: 95%;
+.filters input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--primary-wine-red);
     border-radius: 4px;
-    background: var(--bg-box); 
-    overflow-x: auto;
-    padding: 20px;
-    min-height: 60px; 
-    color: #fff;     
-    border: 1px solid var(--primary-wine-red);
-}
-.results-header, .algorithm-item {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-.results-header {
-    font-weight: bold;
-    color: var(--primary-wine-red);
-    margin-bottom:8px;
-    font-size: 20px;
-    background: transparent;
-}
-.results-header .name,
-.algorithm-item .name {
-    min-width: 50%;
-    flex: 2 1 50%;
-    border-right: 1.5px solid var(--primary-wine-red);
-    margin-right: 12px;
-    text-align: left;
-    word-break: break-word;
-}
-.results-header .category, .algorithm-item .category {
-    border-right: 1.5px solid var(--primary-wine-red);
-    margin-right: 12px;
-    flex: 1 1 25%;
-    text-align: left;
-    word-break: break-word;
-}
-.results-header .difficulty,
-.algorithm-item .difficulty {
-    flex: 1 1 25%;
-    text-align: left;
-    word-break: break-word;
-}
-.results-header span:last-child,
-.algorithm-item span:last-child {
-    border-right: none;
-    margin-right: 0;
-}
-.algorithm-item {
-    cursor: pointer;
     transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
 }
-.algorithm-item:hover {
-    text-shadow: 0 0 8px var(--accent-wine-red);
+
+.filters input[type="checkbox"]:checked {
+    background-color: var(--accent-wine-red);
+    border-color: var(--accent-wine-red);
+}
+.filters input[type="checkbox"]:checked::after {
+    content:"✓";
+    color: var(--bg-dark);
+    position: absolute;
+    left: 1px;
+    top: -2px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.filters .check-box-filters .filter-option:hover input[type="checkbox"] {
+    box-shadow: 0 0 8px var(--primary-wine-red);
+}
+.filters .check-box-filters .filter-option:hover input[type="checkbox"]:checked {
+    box-shadow: 0 0 8px var(--accent-wine-red);
+}
+
+
+/* ===== RESULT SECTION ===== */
+.result-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px 0;
+}
+.resultsBox {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--primary-wine-red);
+    border-radius: 8px;
+    background: var(--bg-box)
+}
+.resultsBox .results {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+.resultsBox .results #results-header {
+    font-size: 24px;
+    color: var(--primary-wine-red);
+}
+.resultsBox .results tbody tr:nth-child(1) td {
+    border-top: 12px solid transparent; /* creates a gap between row 1 and 2 */
+}
+.resultsBox .results th,
+.resultsBox .results td {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 8px;
+}
+.resultsBox .results th:nth-child(1),
+.resultsBox .results td:nth-child(1) {
+    border-right: 2px solid var(--accent-wine-red);
+    width: 50%;
+}
+
+.resultsBox .results th:nth-child(2),
+.resultsBox .results td:nth-child(2) {
+    border-right: 2px solid var(--accent-wine-red);
+    width: 25%;
+}
+
+.resultsBox .results th:nth-child(3),
+.resultsBox .results td:nth-child(3) {
+    width: 25%;
+}
+.resultsBox .results td.difficulty.easy {
+    color: limegreen;
+}
+
+.resultsBox .results td.difficulty.medium {
+    color: gold;
+}
+
+.resultsBox .results td.difficulty.hard {
+    color: crimson;
+}
+.resultsBox .results tbody tr:hover {
+    background: var(--subtle-highlight);
+    cursor: pointer;
+}
+.resultsBox .results tbody tr {
+    transition: background 0.2s ease;
+}
+
+.resultsBox .results td {
+    transition: color 0.2s, text-shadow 0.2s ease;
+}
+.resultsBox .results tbody tr:hover td:not(.difficulty) {
     color: var(--accent-wine-red);
+    text-shadow: 0 0 4px var(--accent-wine-red);
+}
+.resultsBox .results tbody tr:hover td.difficulty.easy {
+    text-shadow: 0 0 4px limegreen;
 }
 
-.difficulty {transition: all 0.2s ease;}
-.difficulty.easy {color: limegreen;}
-.difficulty.medium {color: gold;}
-.difficulty.hard {color: crimson;}
-.algorithm-item:hover .difficulty {
-    text-shadow: 0 0 8px currentColor;
+.resultsBox .results tbody tr:hover td.difficulty.medium {
+    text-shadow: 0 0 4px gold;
 }
 
+.resultsBox .results tbody tr:hover td.difficulty.hard {
+    text-shadow: 0 0 4px crimson;
+}
 /* ===== FADEOUT ===== */
 body.fade-out {
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
 }

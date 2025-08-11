@@ -1,38 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <html lang="en">
     <meta charset="UTF-8" />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALGOLEARN</title>
     <link rel="stylesheet" href="../styles/style.css">
   </head>
   <body>
-    <div class="header">
+     <div class="header-bar">
       <h1 id="appTitle">
         <span class="algolearn-algo">ALGO</span><span class="algolearn-learn">LEARN</span>
       </h1>
-      <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Search algorithms...">
+
+      <div class="search-bar">
+        <input
+          type="text"
+          name="searchBar"
+          id="searchBar"
+          placeholder="Search Algorithms..."
+          >
       </div>
-    </div>
+     </div>
 
+      <section class="filter-section">
+        <div class="filters">
 
-    <div class="filters">
-      <h3>CATEGORIES</h3>
-      <label><input type="checkbox" name="sorting"> Sorting Algorithms</label>
-      <label><input type="checkbox" name="graph"> Graph Algorithms</label>
-      <label><input type="checkbox" name="search"> Search Algorithms</label>
-    </div>
-    <div id="resultsBox">
-      <div class="results-header">
-        <span class="name">Name</span>
-        <span class="category">Category</span>
-        <span class="difficulty">Difficulty</span>
-      </div>
-      <div id="results"></div>
-    </div>
+          <h2 id="filter-heading">CATEGORIES</h2>
+          
+          <div class="check-box-filters">
+            <div class="filter-option">
+              <input type="checkbox" name="sorting" id="sorting">
+              <label for="sorting">Sorting Algorithms</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" name="graph" id="graph">
+              <label for="graph">Graph Algorithms</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" name="search" id="search">
+              <label for="search">Search Algorithms</label>
+            </div>
+          </div>
 
-    <script src="../scripts/appRenderer.js"></script>
-  </body>
-</html>
+        </div>
+      </section>
+
+      <section class="result-section">
+        <div class="resultsBox">
+          <table class="results">
+            <thead id="results-header">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Difficulty</th>
+              </tr>
+            </thead>
+            <tbody id="results"></tbody>
+          </table>
+        </div>
+      </section>
+      
+      
+      <script src="../scripts/appRenderer.js"></script>
+    </body>
+ </html>

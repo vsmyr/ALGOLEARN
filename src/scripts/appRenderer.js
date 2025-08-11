@@ -1,25 +1,13 @@
-
-
 window.addEventListener('DOMContentLoaded', async () => {
     const algorithmsMeta = await window.electronAPI.getAlgorithmsMeta();
 
     const searchBar = document.getElementById('searchBar');
     const filterCheckboxes = document.querySelectorAll('.filters input[type="checkbox"]');
-    const resultsDiv = document.getElementById('results');
+    const resultsTableBody = document.getElementById('results');
 
     //returns an Array with the checked categories
     function getActiveCategories() {
-        return Array.from(filterCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.name);
-    }
-
-    //returns the appropriate color for each difficulty
-    function getDifficultyColor(difficulty) {
-        if(difficulty === 'easy') return 'limegreen';
-        if(difficulty === 'medium') return 'gold';
-        if(difficulty === 'hard') return 'crimson';
-        return 'gray';
+        return Array.from(filterCheckboxes).filter(cb => cb.checked).map(cb => cb.name);
     }
 
     //Navigates to visualizer
@@ -30,29 +18,45 @@ window.addEventListener('DOMContentLoaded', async () => {
         //wait till the animation ends and go to visualizer.html (300ms)
         setTimeout(() => {
             window.location.href = `../views/visualizer.html?algo=${filename}`;
-        }, 300);
+        }, 200);
     }
 
+
+    //builds a row for the results from the information from each algorithm in algorithmMeta
+    function buildRow(algo){
+        const tr = document.createElement('tr');
+        tr.dataset.filename = algo.filename;
+
+        const tdName = document.createElement('td');
+        tdName.textContent = algo.name;
+
+        const tdCategory = document.createElement('td');
+        tdCategory.textContent = algo.category;
+
+        const tdDifficulty = document.createElement('td');
+        tdDifficulty.textContent = algo.difficulty;
+        tdDifficulty.className = `difficulty ${algo.difficulty}`;
+
+        tr.append(tdName, tdCategory, tdDifficulty);
+
+        tr.addEventListener('click', () => navigateToVisualizer(algo.filename));
+        return tr;
+    }
     //handles the renderer of the results
     function renderResults(list) {
-        resultsDiv.innerHTML = '';
+        resultsTableBody.innerHTML = '';
         if(list.length === 0) {
-            resultsDiv.innerHTML = '<p>No algorithms found. </p>';
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 3;
+            td.textContent = 'No algorithms found.';
+            tr.appendChild(td);
+            resultsTableBody.appendChild(tr);
             return;
         }
-        list.forEach(algo => {
-            const div = document.createElement('div');
-            div.className = 'algorithm-item';
-            div.innerHTML = `
-                <span class="name" style="color:var(--primary-blue);"><strong>${algo.name}</strong></span>
-                <span class="category" style="color:var(--primary-blue);">${algo.category}</span>
-                <span class="difficulty ${algo.difficulty}">${algo.difficulty}</span>
-            `;
-            div.addEventListener('click', () => {
-                navigateToVisualizer(algo.filename);
-            });
-            resultsDiv.appendChild(div);
-        });
+        const fragment = document.createDocumentFragment();
+        list.forEach(algo => fragment.appendChild(buildRow(algo)));
+        resultsTableBody.append(fragment);
     }
 
     //searches based on the input in the searchbox and the checkboxes
